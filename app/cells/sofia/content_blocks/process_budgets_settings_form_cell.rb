@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+module Sofia
+  module ContentBlocks
+    class ProcessBudgetsSettingsFormCell < Decidim::ViewModel
+      alias form model
+
+      def processes_options
+        Decidim::ParticipatoryProcess.all.map do |process|
+          [translated_attribute(process.title), process.id]
+        end
+      end
+    end
+  end
+end

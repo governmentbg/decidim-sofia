@@ -1,0 +1,28 @@
+<div class="home__section-header">
+  <h2 class="home__section-title">
+    <%= t("active_spaces", scope: i18n_scope) %>
+  </h2>
+  <% if all_path.present? %>
+    <%= link_to all_path, class: "button button__sm button__text-secondary" do %>
+      <%= t("see_all_spaces", scope: i18n_scope) %>
+      <%= icon "arrow-right-line", class: "fill-current" %>
+    <% end %>
+  <% end %>
+</div>
+<div class="card__grid-home">
+  <% limited_highlighted_spaces.each do |space| %>
+    <a class="card__grid card__grid__full" id="participatory_process_<%=space.id%>" href="<%=resource_locator(space).path %>">
+      <div class="card__grid-text">
+        <h3 class="h4 text-secondary">
+          <%= decidim_html_escape(translated_attribute(space.title))%>
+        </h3>
+        <div class="card__grid-metadata">
+          <%= cell "decidim/participatory_processes/process_metadata_g", space, links: false, **options %>
+        </div>
+      </div>
+      <div class="card__grid-img">
+        <%= image_tag space.attached_uploader(:hero_image).path, alt: [t("decidim.application.photo.alt"), decidim_html_escape(translated_attribute(space.title))].join(": ") %>
+      </div>
+    </a>
+  <% end %>
+</div>

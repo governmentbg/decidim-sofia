@@ -1,0 +1,38 @@
+<div class="user-messages">
+  <div class="user-messages-container">
+    <div class="user-messages-info">
+
+      <span class="font-semibold"><%= t("decidim.regix.titles.#{current_user.regix_status}").html_safe %></span>
+      <% if current_user.regix_retry_date.is_a?(ActiveSupport::TimeWithZone)%>
+        <% if  DateTime.now > current_user.regix_retry_date  %>
+          <%= link_to '/account/regix', id: "", class: "admin-bar__button" do %>
+            <span class="font-semibold"><%= t("decidim.regix.titles.check_address_again").html_safe %></span>
+          <% end %>
+        <% else%>
+          <% minutes = ((current_user.regix_retry_date-DateTime.now).seconds.in_minutes.to_i) +1 %>
+          <span><%= t("decidim.regix.titles.allowed_to_check_again_after", minutes: minutes ).html_safe %></span>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+<!--
+<div id="admin-bar" class="layout-item-alert">
+  <div class="admin-bar">
+    <span class="font-semibold"><%= t("decidim.regix.titles.#{current_user.regix_status}").html_safe %></span>
+    <% if current_user.regix_retry_date.is_a?(ActiveSupport::TimeWithZone)%>
+      <% if  DateTime.now > current_user.regix_retry_date  %>
+        <%= link_to '/account/regix', id: "", class: "admin-bar__button" do %>
+          <span><%= t("decidim.regix.titles.check_address_again").html_safe %></span>
+        <% end %>
+      <% else%>
+        <% minutes = ((current_user.regix_retry_date-DateTime.now).seconds.in_minutes.to_i) +1 %>
+        <span><%= t("decidim.regix.titles.allowed_to_check_again_after", minutes: minutes ).html_safe %></span>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+-->

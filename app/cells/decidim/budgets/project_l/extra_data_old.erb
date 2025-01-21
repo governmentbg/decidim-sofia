@@ -1,0 +1,8 @@
+<div class="budget__card__list-project">
+  <span class="budget__card__list-project__amount">
+    <%= budget_to_currency(project.budget_amount) %>
+  </span>
+  <% if current_user && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').any? %>
+    <%= cell("decidim/budgets/project_vote_button", project, show_only_added:) %>
+  <% end %>
+</div>

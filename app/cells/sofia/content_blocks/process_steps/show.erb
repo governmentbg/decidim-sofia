@@ -1,0 +1,33 @@
+<div id="<%= block_id %>" class="home__section">
+
+    <ol class="sub-navigation-content phases-list">
+
+      <% step_type = 'past' %>
+      <% steps.each_with_index do |step, i| %>
+        <% active = step == active_step %>
+
+        <% step_type = 'future' if step_type == 'current' %>
+        <% step_type = 'current' if active %>
+
+
+<!--        <li class="phases-list-item phases-list-item-<%#=active ? 'current' : 'past' %>">-->
+        <li class="phases-list-item phases-list-item-<%=step_type%>">
+          <div class="phases-list-item-phase">
+            <span class="phases-list-item-number"><%= step.position + 1 %></span>
+          </div>
+          <div class="phases-list-item-info">
+            <p class="phases-list-item-title">
+              <% if false && active %>
+                <span style="visibility: visible;" class="participatory-space__metadata-modal__step-current"><%= t("active_step", scope: "layouts.decidim.participatory_processes.participatory_process") %></span>
+              <% end %>
+
+              <%= decidim_escape_translated(step.title) %>
+            </p>
+            <div class="phases-list-item-date"><%= step_dates(step) %></div>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+
+</div>
+

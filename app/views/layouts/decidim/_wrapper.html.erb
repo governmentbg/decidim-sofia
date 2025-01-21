@@ -1,0 +1,47 @@
+<%
+  if respond_to?(:current_component) && current_component && can_be_managed?(current_component)
+    edit_link(
+      manage_component_path(current_component),
+      :read,
+      :component,
+      component: current_component,
+      current_participatory_space:
+    )
+  end
+%>
+
+<div class="layout-container">
+  <%= render partial: "layouts/decidim/missing_sso" if current_user && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').empty? && Decidim::Authorization.where(decidim_user_id: current_user.id, name: :egn_authorization_handler).empty? %>
+  <%= render partial: "layouts/decidim/status_message" if current_user && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').any? && current_user.regix_status != 'success' && current_user.regix_status.present? %>
+  <%= render partial: "layouts/decidim/under_18" if current_user && current_user.old_enough? ==false && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').any? && current_user.regix_status == 'success' %>
+  <header <%= "class=with-admin-bar" if current_user && allowed_to?(:read, :admin_dashboard) %>>
+    <div id="sticky-header-container" data-sticky-header>
+      <%#= render partial: "layouts/decidim/impersonation_warning" %>
+      <%= render partial: "layouts/decidim/omnipresent_banner" %>
+      <%= render partial: "layouts/decidim/offline_banner" %>
+
+      <%= render partial: "layouts/decidim/admin_links" if current_user && allowed_to?(:read, :admin_dashboard) %>
+      <%#= render partial: "layouts/decidim/missing_sso" if current_user && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').empty? && Decidim::Authorization.where(decidim_user_id: current_user.id, name: :egn_authorization_handler).empty? %>
+      <%#= render partial: "layouts/decidim/status_message" if current_user && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').any? && current_user.regix_status != 'success' && current_user.regix_status.present? %>
+      <%#= render partial: "layouts/decidim/under_18" if current_user && current_user.old_enough? ==false && Decidim::Authorization.where(decidim_user_id: current_user.id, name: 'valid_sso').any? && current_user.regix_status == 'success' %>
+      <%= render partial: "layouts/decidim/header/main" %>
+    </div>
+    <div id="menu-bar-container">
+      <%= render partial: "layouts/decidim/header/menu" unless controller_name == "homepage" %>
+    </div>
+  </header>
+
+  <div id="content" data-content>
+    <% if display_flash_messages.present? %>
+      <div id="flash-messages-container" class="container">
+        <%= display_flash_messages %>
+      </div>
+    <% end %>
+    <%= yield %>
+  </div>
+
+  <footer>
+    <%= render partial: "layouts/decidim/footer/main" %>
+    <%= render partial: "layouts/decidim/footer/mini" %>
+  </footer>
+</div>

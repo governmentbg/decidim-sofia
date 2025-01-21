@@ -1,0 +1,11 @@
+<main class="layout-1col cols-6">
+  <div class="flex justify-center">
+    <h1 class="title-decorator my-12"><%= t(".title") %></h1>
+  </div>
+
+  <div class="form__wrapper-block">
+    <%= link_to '/users/auth/saml_custom', id: "identify-button", class: "button large primary", method: :post do %>
+      <%= t(".continue") %>
+    <% end %>
+  </div>
+</main>
