@@ -1,0 +1,11 @@
+en:
+  decidim:
+    authorization_handlers:
+      valid_sso:
+        explanation: e-Authentication via State e-Government Agency
+        name: e-Authentication
+    valid_sso:
+      authorizations:
+        create:
+          error: There was an error creating the authorization
+          success: You have been authorized successfully

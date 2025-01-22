@@ -1,0 +1,11 @@
+bg:
+  decidim:
+    authorization_handlers:
+      valid_sso:
+        explanation: е-Автентикация чрез МЕУ
+        name: е-Автентикация
+    valid_sso:
+      authorizations:
+        create:
+          error: There was an error creating the authorization
+          success: You have been authorized successfully
